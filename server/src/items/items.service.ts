@@ -9,10 +9,6 @@ import { Repository } from 'typeorm';
 export class ItemsService {
   constructor(@InjectRepository(Item) private readonly itemRepo: Repository<Item>) {}
   
-  create(createItemDto: CreateItemDto) {
-    return 'This action adds a new item';
-  }
-
   async findAll(offset = 0, limit = 20): Promise<Item[]> {
     return this.itemRepo.find({
       order: { createdAt: 'DESC' },
@@ -21,21 +17,10 @@ export class ItemsService {
     });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} item`;
-  }
-
   async update(id: string, dto: UpdateItemDto): Promise<Item> {
     await this.itemRepo.update(id, dto);
     return this.itemRepo.findOneByOrFail({ id });
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} item`;
-  }
- 
-
- 
 
   async bulkUpdate(ids: string[], data: Partial<Item>): Promise<void> {
     await this.itemRepo.update(ids, data);
