@@ -1,4 +1,23 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateItemDto } from './create-item.dto';
+import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator'
+import { ItemStatus } from '../entities/item.entity'
 
-export class UpdateItemDto extends PartialType(CreateItemDto) {}
+export class UpdateItemDto {
+     @IsString()
+      @IsNotEmpty()
+      name: string
+    
+      @IsString()
+      type: string
+    
+      @IsString()
+      size: string
+    
+      @IsString()
+      color: string
+    
+      @IsNumber()
+      quantity: number
+    
+      @IsEnum(['success', 'error'])
+      status: ItemStatus
+}

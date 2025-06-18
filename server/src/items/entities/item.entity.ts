@@ -1,6 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm'
 
-export type ItemStatus = 'success' | 'error'
+export enum ItemStatus {
+  Success = 'success',
+  Error = 'error'
+}
 
 @Entity('items')
 export class Item {
@@ -22,8 +25,8 @@ export class Item {
   @Column()
   quantity: number
 
-  @Column({ type: 'enum', enum: ['success', 'error'], default: 'success' })
-  status: ItemStatus
+   @Column({ type: 'enum', enum: ItemStatus, default: ItemStatus.Success })
+  status: ItemStatus;
 
   @CreateDateColumn()
   createdAt: Date
