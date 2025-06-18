@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { AppDataSource } from '../data-source'
 
-import { Item } from '../items/entities/item.entity'
+import { Item, ItemStatus } from '../items/entities/item.entity'
 
 function generateFakeItem(): Item {
   const item = new Item()
@@ -10,7 +10,7 @@ function generateFakeItem(): Item {
   item.size = faker.helpers.arrayElement(['P', 'M', 'G', 'GG'])
   item.color = faker.color.human()
   item.quantity = faker.number.int({ min: 1, max: 100 })
-  item.status = faker.helpers.arrayElement(['success', 'error'])
+  item.status = faker.helpers.arrayElement([ItemStatus.Success, ItemStatus.Error])
   return item
 }
 
