@@ -102,7 +102,7 @@ export function ItemList() {
             {totalErros} itens com Erro
           </Typography>
           <Typography sx={{ color: "teceo.contrastText", fontWeight: 400 }}>
-            {totalGeral} Total de itens
+            {totalGeral} itens
           </Typography>
         </Box>
         <Box>
