@@ -57,7 +57,15 @@ export function ItemList() {
         onConfirm={handleBulkConfirm}
       />
 
-      {status === "pending" && <CircularProgress />}
+      {status === "pending" && <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        minHeight="40vh"
+        width="100%"
+      >
+        <CircularProgress />
+      </Box>}
       {status === "error" && <div>Erro ao carregar itens</div>}
 
       <ItemTable
@@ -83,18 +91,20 @@ export function ItemList() {
           borderBottomRightRadius: 16,
           borderTopLeftRadius: 0,
           borderTopRightRadius: 0,
-          boxShadow: 2
+          boxShadow: 2,
         }}
       >
-        <Typography color="success" sx={{ fontWeight: 500 }}>
-          {totalConcluidos} itens concluídos
-        </Typography>
-        <Typography color="error" sx={{ fontWeight: 500 }}>
-          {totalErros} itens com Erro
-        </Typography>
-        <Typography sx={{ color: "teceo.contrastText", fontWeight: 500 }}>
-          {totalGeral} Total de itens
-        </Typography>
+        <Box display="flex" gap={3} alignItems="center">
+          <Typography color="success.main" sx={{ fontWeight: 400 }}>
+            {totalConcluidos} itens concluídos
+          </Typography>
+          <Typography color="error.main" sx={{ fontWeight: 400 }}>
+            {totalErros} itens com Erro
+          </Typography>
+          <Typography sx={{ color: "teceo.contrastText", fontWeight: 400 }}>
+            {totalGeral} Total de itens
+          </Typography>
+        </Box>
         <Box>
           <Button
             variant="outlined"
@@ -113,7 +123,7 @@ export function ItemList() {
             {selection.selectedIds.length === 0
               ? "Nenhum item selecionado"
               : `(${selection.selectedIds.length}) ${selection.selectedIds.length === 1 ? "Item" : "Itens"} 
-      selecionado${selection.selectedIds.length === 1 ? "" : "s"}`}
+        selecionado${selection.selectedIds.length === 1 ? "" : "s"}`}
           </Button>
         </Box>
       </Box>

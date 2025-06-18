@@ -17,7 +17,7 @@ export function AppHeader() {
         Teceo Challenge
       </Typography>
       <IconButton onClick={toggleTheme} size="large" color="inherit">
-        {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+        {mode === 'dark' ? <LightModeIcon sx={{ color: 'white' }} /> : <DarkModeIcon  />}
       </IconButton>
     </header>
   )

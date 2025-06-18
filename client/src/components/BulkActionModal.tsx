@@ -29,6 +29,10 @@ export function BulkActionModal({ open, onClose, onConfirm, items }: BulkActionM
     setBulkValues(v => ({ ...v, [field]: value }))
   }
 
+  function resetFields() {
+    setBulkValues({ status: "", quantity: "", size: "" });
+  }
+
   async function handleBulk() {
     const data: Partial<Item> = {}
     if (bulkValues.status) data.status = bulkValues.status as Item['status']
@@ -38,8 +42,10 @@ export function BulkActionModal({ open, onClose, onConfirm, items }: BulkActionM
      try {
         await mutateAsync({ ids: items.map(i => i.id), data })
         onConfirm(true)
+        resetFields();
     } catch {
-    onConfirm(false)
+        onConfirm(false)
+        resetFields();
     }
   }
 
