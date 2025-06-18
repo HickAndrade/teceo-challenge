@@ -54,3 +54,9 @@ Frontend: http://localhost:4173
 Backend: http://localhost:3000
 
 Banco: localhost:5432 (usuário/senha definidos no .env)
+
+ℹ️ Observação:
+Na primeira execução, o Docker precisará baixar as imagens base e instalar dependências do zero.
+Esse processo pode levar de 3 a 5 minutos, dependendo da sua conexão e máquina.
+
+Nas execuções seguintes, como as imagens já estarão em cache, a aplicação sobe em poucos segundos.
