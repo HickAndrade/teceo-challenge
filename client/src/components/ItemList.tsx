@@ -1,4 +1,4 @@
-import { Box, Typography, CircularProgress, useTheme } from "@mui/material"
+import { Box, CircularProgress } from "@mui/material"
 import { useItemsInfiniteScroll } from "../hooks/useItemsInfiniteScroll"
 import { useSelection } from "../hooks/useSelection"
 import { BulkActionModal } from "./BulkActionModal"
@@ -8,8 +8,8 @@ import { useState } from "react"
 import { useSnackbar } from "../hooks/useSnackbar"
 import { useItemsTotals } from "../hooks/items/useItemsTotals"
 import { useEditItem } from "../hooks/items/useEditItem"
-import { Button } from "./ui/Button"
 import { exportItemsToCSV } from "../utils/exportItemsToCSV"
+import { TotalizerFooter } from "./TotalizeFooter"
 
 export function ItemList() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useItemsInfiniteScroll();
@@ -19,8 +19,6 @@ export function ItemList() {
   const [isBulkModalOpen, setBulkModalOpen] = useState(false);
   const { mutateAsync: updateItem } = useEditItem();
   const { show } = useSnackbar();
-  const theme = useTheme();
-
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
     const bottom = e.currentTarget.scrollHeight - e.currentTarget.scrollTop === e.currentTarget.clientHeight
@@ -78,55 +76,19 @@ export function ItemList() {
         onScroll={handleScroll}
         isFetchingNextPage={isFetchingNextPage}
       />
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        sx={{
-          bgcolor: theme.palette.teceoSecondary.dark,
-          color: "teceo.contrastText",
-          py: "18px",
-          px: "20px",
-          borderBottomLeftRadius: 16,
-          borderBottomRightRadius: 16,
-          borderTopLeftRadius: 0,
-          borderTopRightRadius: 0,
-          boxShadow: 2,
-        }}
-      >
-        <Box display="flex" gap={3} alignItems="center">
-          <Typography color="success.main" sx={{ fontWeight: 400 }}>
-            {totalConcluidos} itens concluídos
-          </Typography>
-          <Typography color="error.main" sx={{ fontWeight: 400 }}>
-            {totalErros} itens com Erro
-          </Typography>
-          <Typography sx={{ color: "teceo.contrastText", fontWeight: 400 }}>
-            {totalGeral} itens
-          </Typography>
-        </Box>
-        <Box>
-          <Button
-            variant="outlined"
-            color="primary"
-            sx={{ mr: 2, color: "teceo.contrastText", borderColor: "teceo.contrastText" }}
-            disabled={selection.selectedIds.length === 0}
-            onClick={() => exportItemsToCSV(items.filter(i => selection.selectedIds.includes(i.id)), "itens.csv")}
-          >
-            Exportar
-          </Button>
-          <Button
-            variant="contained"
-            disabled={selection.selectedIds.length === 0}
-            onClick={handleBulkAction}
-          >
-            {selection.selectedIds.length === 0
-              ? "Nenhum item selecionado"
-              : `(${selection.selectedIds.length}) ${selection.selectedIds.length === 1 ? "Item" : "Itens"} 
-        selecionado${selection.selectedIds.length === 1 ? "" : "s"}`}
-          </Button>
-        </Box>
-      </Box>
+     <TotalizerFooter
+        totalConcluidos={totalConcluidos}
+        totalErros={totalErros}
+        totalGeral={totalGeral}
+        numSelecionados={selection.selectedIds.length}
+        onExport={() =>
+          exportItemsToCSV(
+            items.filter(i => selection.selectedIds.includes(i.id)),
+            "itens.csv"
+          )
+        }
+        onBulk={handleBulkAction}
+      />
     </Box>
   )
 }
